@@ -15,6 +15,20 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'IndexPage',
+        path: '/',
+        component: resolve(__dirname, 'pages/index.vue')
+      },
+      {
+        name: 'NewPost',
+        path: '/ajouter_article',
+        component: resolve(__dirname, 'pages/NewPost.vue')
+      })
+    }
+  },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
