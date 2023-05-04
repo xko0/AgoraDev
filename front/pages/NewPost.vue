@@ -32,31 +32,31 @@ export default {
 
   methods: {
     async createPost() {
-      const apiHost = 'http://localhost:10005/wp-json';
+      const apiHost = 'http://localhost:10010/wp-json';
       const url = `${apiHost}/wp/v2/posts`;
       const username = 'xko';
-      const password = 'LtAB 06Ms pdNt EFvL 7tyU QxjK';
-      
+      const password = '9XKG 2sYw 3EhR IHur 2EFf gbvI';
+      const token = btoa(`${username}:${password}`);
+
       try {
         const response = await fetch(url, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${token}`
           },
           body: JSON.stringify({
             title: this.title,
             content: this.content,
             status: 'publish'
           }),
-          credentials: 'include',
-          auth: `${username}:${password}`
         });
 
         const data = await response.json();
         console.log(data);
         this.$router.push('/');
       } catch (error) {
-        console.error(error, 'test');
+        console.error(error);
       }
     }
   }
