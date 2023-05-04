@@ -32,39 +32,31 @@ export default {
 
   methods: {
     async createPost() {
+      const apiHost = 'http://localhost:10005/wp-json';
+      const url = `${apiHost}/wp/v2/posts`;
+      const username = 'xko';
+      const password = 'LtAB 06Ms pdNt EFvL 7tyU QxjK';
+      
       try {
-        const loginResponse = await fetch('http://localhost:10005/wp-json/wp/v2/users/me', {
+        const response = await fetch(url, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: 'xko',
-            password: '123456'
-          })
-        })
-        const tokenData = await loginResponse.json()
-        console.log(tokenData)
-        const token = tokenData.token
-
-        const response = await fetch('http://localhost:10005/wp-json/wp/v2/posts', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             title: this.title,
             content: this.content,
             status: 'publish'
-          })
-        })
+          }),
+          credentials: 'include',
+          auth: `${username}:${password}`
+        });
 
-        const data = await response.json()
-        console.log(data)
-        this.$router.push('/')
+        const data = await response.json();
+        console.log(data);
+        this.$router.push('/');
       } catch (error) {
-        console.error(error, 'test')
+        console.error(error, 'test');
       }
     }
   }
